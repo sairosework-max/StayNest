@@ -1,133 +1,123 @@
-# StayNest Accommodation Booking System (Java Console Application)
+# StayNest Accommodation Booking System
 
-A text-based, Airbnb-style accommodation booking system built for
-ICT711 Assessment 3 (Java Application Group Project).
+## Project Overview
+A text-based, Airbnb-style accommodation booking system developed as a Java console application for ICT711 Assessment 3. The system manages property listings, user accounts, bookings, and feedback with reward/penalty mechanisms.
 
-> IMPORTANT — Academic integrity: your unit's brief prohibits AI writing
-> the report. Check with your unit coordinator whether AI-assisted code
-> is acceptable for this assessment. Treat this project as a reference/
-> scaffold: read through every class, make sure every group member can
-> explain it, and adapt it (attributes, methods, UI wording, extra
-> features) in your own words before submitting.
+## Team Members
+- [Replace with actual group member names]
 
-## How to compile and run
+## Technical Requirements
+- **Java Version**: JDK 11+ (developed with Java 21)
+- **Dependencies**: No external libraries - uses only standard library
+- **Build Tool**: Manual compilation with javac
 
-Requires a JDK (Java 11+; developed against Java 21). No external
-libraries are used — only the standard library.
-
+## Compilation and Execution
 ```bash
 cd src
 javac -d ../bin *.java
 cd ../bin
-java -cp . Main
-```
-
-Run `java` from a working directory that contains a `data/` folder (or
-copy the `data/` folder next to wherever you run `java Main` from) — the
-program reads `data/accommodations.txt` and `data/bookings.txt` on
-startup and writes back to them when you save/exit.
-
-If you compile straight into `bin/` as above, copy the `data` folder in
-too:
-```bash
 cp -r ../data .
 java -cp . Main
 ```
 
-## Project structure
-
+## Project Structure
 ```
 src/
-  Accommodation.java              abstract base class (abstraction + encapsulation)
-  Apartment.java                  subclass (inheritance + polymorphism)
-  House.java                      subclass (inheritance + polymorphism)
-  Villa.java                      subclass (inheritance + polymorphism)
-  Booking.java                    a single reservation
-  BookingStatus.java              enum: PENDING, CONFIRMED, CANCELLED, COMPLETED
-  BookingSystem.java              core logic; owns all the Collections API usage
-  FileManager.java                text file reading/writing
-  Main.java                       text-based CLI (menu-driven UI)
-  AccommodationNotFoundException.java   custom checked exception
-  InvalidBookingException.java          custom checked exception
-  InvalidInputException.java            custom unchecked exception
+├── Accommodation.java              # Abstract base class
+├── Apartment.java                  # Subclass
+├── House.java                      # Subclass
+├── Villa.java                      # Subclass
+├── User.java                       # User management
+├── Booking.java                    # Reservation model
+├── BookingStatus.java              # Enum: PENDING, CONFIRMED, CANCELLED, COMPLETED
+├── BookingSystem.java              # Core business logic
+├── FileManager.java                # File I/O operations
+├── Main.java                       # Console UI
+├── AccommodationNotFoundException.java
+├── InvalidBookingException.java
+├── InvalidInputException.java
+└── RewardPenaltyManager.java       # Rating/reward logic
+
 data/
-  accommodations.txt              seed data (12 properties: 4 apartments, 4 houses, 4 villas)
-  bookings.txt                    seed data (7 sample bookings)
+├── accommodations.txt              # 12 seed properties
+├── bookings.txt                    # 7 seed bookings
+└── users.txt                       # 10+ users
 ```
 
-## How each rubric requirement is met
+## Key Features
 
-**Inheritance** — `Apartment`, `House`, and `Villa` all extend the abstract
-`Accommodation` class and inherit its common fields/behaviour.
+### 1. Object-Oriented Design
+- **Inheritance**: Apartment, House, Villa extend abstract Accommodation
+- **Polymorphism**: `calculateTotalPrice()` overridden per property type
+- **Abstraction**: Accommodation defines abstract methods for price, category
+- **Encapsulation**: All fields private with validation in setters
 
-**Polymorphism** — `calculateTotalPrice(int nights)` and `getCategory()`
-are declared abstract in `Accommodation` and overridden differently in
-each subclass. `BookingSystem` and `Main` work with `Accommodation`
-references throughout (e.g. `ArrayList<Accommodation>`), and calling
-`accommodation.calculateTotalPrice(nights)` invokes the correct
-subclass's logic at runtime without the caller needing to know which
-concrete type it is.
+### 2. Collections API Usage
+- `ArrayList<Accommodation>`: Property catalog (read-heavy, indexed)
+- `LinkedList<Booking>`: Booking history (frequent appends)
+- `Queue<Booking>`: Pending requests (FIFO processing)
+- `HashMap<String, Accommodation>`: O(1) property lookup by ID
+- `ArrayList<User>`: User management
 
-**Abstraction** — `Accommodation` is `abstract` and can never be
-instantiated directly; it defines *what* every accommodation must be
-able to do (`calculateTotalPrice`, `getCategory`, `getExtraDetails`,
-`toFileString`) without saying *how*, leaving that to each subclass.
+### 3. File I/O Operations
+- Reads/writes text files in pipe-delimited format
+- Uses try-with-resources and BufferedReader/BufferedWriter
+- Graceful error handling for malformed lines
 
-**Encapsulation** — every field in every class is `private`; all access
-goes through getters/setters, and setters validate input (e.g. price
-can't be negative, dates must be in order) so objects can never enter
-an invalid state from outside the class.
+### 4. Exception Handling
+- **Checked Exceptions**: AccommodationNotFoundException, InvalidBookingException
+- **Unchecked Exception**: InvalidInputException (RuntimeException)
+- **File I/O**: Catches IOException, continues processing valid data
+- **User Input**: Wrapped in try/catch with re-prompt on error
 
-**Collections API** (see the Javadoc at the top of `BookingSystem.java`
-for the full justification of each choice):
-- `ArrayList<Accommodation>` — the property catalogue (read-heavy,
-  indexed access).
-- `LinkedList<Booking>` — the full booking history (frequent appends,
-  sequential iteration).
-- `Queue<Booking>` (backed by `LinkedList`) — pending booking requests
-  processed strictly first-in-first-out via `poll()`.
-- `HashMap<String, Accommodation>` — O(1) lookup of a property by ID.
+### 5. CRUD Operations
 
-**File I/O** — `FileManager` reads/writes `data/accommodations.txt` and
-`data/bookings.txt` in a simple pipe-delimited text format, using
-try-with-resources and `BufferedReader`/`BufferedWriter`.
+| Entity        | Create | Read | Update | Delete |
+|---------------|--------|------|--------|--------|
+| Accommodation | ✅      | ✅    | ✅      | ✅      |
+| Booking       | ✅      | ✅    | ✅      | ✅      |
+| User          | ✅      | ✅    | ✅      | ✅      |
 
-**Exception handling** — three custom exceptions
-(`AccommodationNotFoundException`, `InvalidBookingException` are
-checked; `InvalidInputException` is an unchecked `RuntimeException`
-used for bad input/validation). `FileManager` catches `IOException`/
-`FileNotFoundException` and skips individual malformed lines instead of
-crashing. `Main` wraps every menu action in try/catch and re-prompts on
-bad input rather than terminating.
+### 6. Rating & Reward System
+- Completed bookings can be rated 1-5
+- **Rewards**: Ratings 4-5 → +10 reward points
+- **Penalties**: Ratings 1-2 → recorded penalty
+- **Neutral**: Rating 3 → no action
 
-**Text-based UI** — `Main` implements a menu-driven CLI (main menu →
-accommodation management / booking management submenus) with input
-validation loops for every prompt.
+## Core Functionality
 
-## CRUD coverage
+### Property Management
+- Add/Update/Delete accommodations
+- Search by location or maximum price
+- View all properties with details
 
-| Entity        | Create | Read (view/search) | Update | Delete |
-|---------------|--------|---------------------|--------|--------|
-| Accommodation | ✅ add | ✅ view all, search by location, search by max price | ✅ update | ✅ delete |
-| Booking       | ✅ create booking request | ✅ view all | ✅ update status | ✅ cancel / delete |
+### Booking Management
+- Create booking requests (pending queue)
+- Process pending requests (FIFO)
+- Update booking statuses
+- Cancel/delete bookings
 
-## Things to personalise before submission
+### User Management
+- Add/view/search/update/delete users
+- View reward points and penalties
 
-1. Replace the "Group Member One/Two/Three" placeholder guest names in
-   `data/bookings.txt` and add your **actual group members' names**
-   into the seed data somewhere (the brief asks for this).
-2. Add your names to the header comment in `Main.java`.
-3. Adjust attributes/pricing rules/menu wording if you want the system
-   to feel more like your own design rather than a template.
-4. Compile and test locally — this code has been carefully hand-checked
-   for balanced braces/parens and correct exception declarations, but
-   it has **not** been run through an actual `javac`/JVM in this
-   environment (no compiler was available), so please compile and test
-   it yourselves before relying on it.
+## Customization Checklist
+- [ ] Replace placeholder guest names with actual group members
+- [ ] Add names to header comments
+- [ ] Adjust pricing rules if needed
+- [ ] Modify menu wording for originality
+- [ ] Test all functionality locally
 
+## Testing Notes
+- Compile and run with provided seed data
+- Verify all CRUD operations
+- Test rating/reward system
+- Validate file persistence
+- Ensure exception handling works
 
-## Added assessment features
-- User management: add, view/search, update and delete users.
-- Evaluation and feedback: completed bookings can be rated from 1 to 5.
-- Reward/penalty workflow: ratings 4-5 award 10 reward points; ratings 1-2 record a penalty; rating 3 is neutral.
-- users.txt contains more than 10 users as required for the file-handling demonstration.
+## Important Academic Note
+This project is a reference scaffold. Each team member must understand and explain every class. Modify attributes, methods, and features to make it your own before submission.
+
+---
+
+*Developed for ICT711 Assessment 3 - Java Application Group Project*
