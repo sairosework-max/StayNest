@@ -1,0 +1,12 @@
+APARTMENT|A1|Cozy CBD Studio|Sydney CBD|120.0|2|true|1
+APARTMENT|A2|Harbourview Flat|Sydney CBD|180.0|4|true|2
+APARTMENT|A3|Budget Backpacker Unit|Newtown|75.0|3|true|1
+APARTMENT|A4|Modern Loft|Melbourne CBD|150.0|3|true|2
+HOUSE|A5|Family Beach House|Bondi Beach|280.0|6|true|true|2
+HOUSE|A6|Suburban Retreat|Parramatta|190.0|5|true|false|1
+HOUSE|A7|Heritage Cottage|Katoomba|160.0|4|true|true|1
+VILLA|A8|Luxury Bay Villa|Byron Bay|550.0|10|true|true|true
+VILLA|A9|Hilltop Villa|Noosa|420.0|8|true|true|false
+VILLA|A10|Private Pool Villa|Gold Coast|610.0|12|true|true|true
+APARTMENT|A11|Riverside Apartment|Brisbane CBD|140.0|3|true|2
+HOUSE|A12|Country Farmhouse|Hunter Valley|230.0|7|true|true|2

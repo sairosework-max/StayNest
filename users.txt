@@ -1,0 +1,13 @@
+U1|Alex Nguyen|alex.nguyen@example.com|0401000001|10|0
+U2|Priya Sharma|priya.sharma@example.com|0401000002|20|0
+U3|Liam O'Connor|liam.oconnor@example.com|0401000003|0|0
+U4|Chen Wei|chen.wei@example.com|0401000004|10|0
+U5|Maya Patel|maya.patel@example.com|0401000005|0|0
+U6|Noah Williams|noah.williams@example.com|0401000006|30|0
+U7|Emma Brown|emma.brown@example.com|0401000007|0|1
+U8|Oliver Smith|oliver.smith@example.com|0401000008|20|0
+U9|Sophia Wilson|sophia.wilson@example.com|0401000009|0|0
+U10|Ethan Jones|ethan.jones@example.com|0401000010|10|0
+U11|Group Member One|member1@example.com|0401000011|0|0
+U12|Group Member Two|member2@example.com|0401000012|0|0
+U13|Group Member Three|member3@example.com|0401000013|0|0
