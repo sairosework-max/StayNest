@@ -4,7 +4,12 @@
 A text-based, Airbnb-style accommodation booking system developed as a Java console application for ICT711 Assessment 3. The system manages property listings, user accounts, bookings, and feedback with reward/penalty mechanisms.
 
 ## Team Members
-- [Replace with actual group member names]
+Sairose Mehbub Sasshoo - 12300760
+Prakash Kharel - 20037255
+Mohan Rawat - 20040882
+Umair Abdul Qayyum - 20034554
+Sujit Rana Magar - 
+
 
 ## Technical Requirements
 - **Java Version**: JDK 11+ (developed with Java 21)
